@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asian Art Explorer</title>
+    <link rel="stylesheet" href="asian_art_explorer.css" />
+  </head>
+  <body>
+
+    <header>
+      <h1>Asian Art Explorer</h1>
+      <p>The Metropolitan Museum of Art</p>
+    </header>
+
+    <div class="stage">
+      <button class="nav-btn" id="prev" aria-label="prev">◀</button>
+
+      <div class="artwork-wrap" id="artwork-wrap">
+        <canvas class="shader-canvas" id="shader-canvas"></canvas>
+        <img class="artwork-img" id="artwork-img" alt="" />
+
+        <div class="info-overlay" id="info-overlay">
+          <span class="info-badge" id="info-badge"></span>
+          <div class="info-title" id="info-title"></div>
+          <div class="info-title-en" id="info-title-en"></div>
+          <div class="info-meta" id="info-meta"></div>
+          <div class="info-desc" id="info-desc"></div>
+          <div class="close-hint">click again to close</div>
+        </div>
+      </div>
+
+      <button class="nav-btn" id="next" aria-label="next">▶</button>
+    </div>
+
+    <footer>
+      <div class="counter" id="counter"></div>
+      <div class="dots" id="dots"></div>
+    </footer>
+
+    <script src="asian_art_explorer.js"></script>
+  </body>
+</html>
