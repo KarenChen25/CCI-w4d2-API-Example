@@ -106,6 +106,49 @@ canvas.addEventListener('mousemove', e => {
 
 initGL();
 
+// ══ 彩色方形點點 ══════════════════════════════════════════
+
+const DOT_COLORS = [
+  '#e8a87c', '#d06488', '#c0453a', '#4a9fd4',
+  '#d4921a', '#2ea854', '#8a6fbf', '#2a8faa',
+  '#f0d080', '#e07090', '#70c0e0', '#a0d870',
+];
+
+function spawnDots() {
+  const layer = document.getElementById('dots-layer');
+  const count = 55;
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+
+    const size   = 3 + Math.random() * 7;           // 3–10px
+    const x      = Math.random() * 100;              // % across
+    const y      = Math.random() * 100;              // % down
+    const color  = DOT_COLORS[Math.floor(Math.random() * DOT_COLORS.length)];
+    const dur    = 6 + Math.random() * 14;           // 6–20s
+    const delay  = -(Math.random() * dur);           // stagger start
+    const travel = -30 - Math.random() * 60;         // drift upward
+    const rotate = -45 + Math.random() * 90;
+    const opac   = 0.15 + Math.random() * 0.35;
+
+    dot.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${x}%;
+      top: ${y}%;
+      background: ${color};
+      animation-duration: ${dur}s;
+      animation-delay: ${delay}s;
+      --dot-opacity: ${opac};
+      --dot-travel: ${travel}px;
+      --dot-rotate: ${rotate}deg;
+    `;
+    layer.appendChild(dot);
+  }
+}
+
+spawnDots();
+
 // ══ 資料與互動 ════════════════════════════════════════════
 
 let artworks = [];

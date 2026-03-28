@@ -34,6 +34,28 @@ body {
   overflow: hidden;
 }
 
+.dots-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dot {
+  position: absolute;
+  border-radius: 1px;
+  opacity: 0;
+  animation: dot-float linear infinite;
+}
+
+@keyframes dot-float {
+  0%   { opacity: 0; transform: translateY(0px) rotate(0deg); }
+  10%  { opacity: var(--dot-opacity); }
+  90%  { opacity: var(--dot-opacity); }
+  100% { opacity: 0; transform: translateY(var(--dot-travel)) rotate(var(--dot-rotate)); }
+}
+
 .bg-cell {
   overflow: hidden;
   cursor: pointer;
