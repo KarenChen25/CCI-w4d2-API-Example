@@ -1,30 +1,77 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
   --accent: #8a7a6a;
   --fade: 0.45s;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
 
 body {
-  background: #f7f4f0;
-  color: #2d2520;
-  font-family: 'Helvetica Neue', 'Hiragino Sans', Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: background var(--fade);
+  background: #111;
+  color: #f0ebe5;
+  font-family: "Helvetica Neue", "Hiragino Sans", Arial, sans-serif;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 20vh;
+  grid-auto-flow: dense;
+  gap: 3px;
+  background: #0d0d0d;
+  overflow: hidden;
+}
+
+.bg-cell {
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.bg-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+  transition:
+    opacity 0.3s,
+    transform 0.4s;
+  display: block;
+}
+
+.bg-cell:hover img {
+  opacity: 0.72;
+  transform: scale(1.04);
 }
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
   text-align: center;
-  padding: 1.2rem 1rem 0.8rem;
-  flex-shrink: 0;
+  padding: 1rem 1rem 2rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.72) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
+
 header h1 {
   font-size: 0.7rem;
   font-weight: 400;
@@ -34,51 +81,40 @@ header h1 {
   margin-bottom: 0.2rem;
   transition: color var(--fade);
 }
+
 header p {
   font-size: 0.62rem;
   letter-spacing: 0.18em;
-  color: #b0a090;
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .stage {
-  flex: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
-  width: 100%;
-  max-width: 700px;
-  padding: 0 1rem;
-  min-height: 0;
+  pointer-events: none;
 }
-
-.nav-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #c5b8a8;
-  font-size: 1.4rem;
-  padding: 0.5rem;
-  transition: color 0.2s, transform 0.2s;
-  flex-shrink: 0;
-  user-select: none;
-  line-height: 1;
-}
-.nav-btn:hover { color: var(--accent); transform: scale(1.2); }
 
 .artwork-wrap {
+  pointer-events: auto;
   position: relative;
   cursor: pointer;
-  height: 100%;
-  max-height: 100%;
+  height: 60vh;
   aspect-ratio: 4 / 5;
+  border-radius: 0px;
+  box-shadow:
+    0 16px 70px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 .artwork-img,
 .shader-canvas {
   width: 100%;
   height: 100%;
-  border-radius: 6px;
+  border-radius: 0px;
   display: block;
   object-fit: cover;
 }
@@ -86,24 +122,27 @@ header p {
 .artwork-img {
   opacity: 0;
   transition: opacity var(--fade);
-  background: #e8e0d8;
+  background: #2a2420;
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
 }
-.artwork-img.loaded { opacity: 1; }
+.artwork-img.loaded {
+  opacity: 1;
+}
 
 .shader-canvas {
   display: none;
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
 }
 
-/* ── 資訊浮層 ── */
 .info-overlay {
   position: absolute;
   inset: 0;
-  border-radius: 6px;
-  background: rgba(15, 10, 8, 0.84);
+  border-radius: 0px;
+  background: rgba(10, 6, 4, 0.88);
   backdrop-filter: blur(4px);
   display: flex;
   flex-direction: column;
@@ -155,7 +194,7 @@ header p {
   color: #d0c4b8;
   line-height: 1.7;
   margin-top: 0.6rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 0.6rem;
 }
 .close-hint {
@@ -165,41 +204,39 @@ header p {
   letter-spacing: 0.1em;
 }
 
-/* ── 底部 ── */
 footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
   text-align: center;
-  padding: 0.8rem 1rem 1rem;
-  flex-shrink: 0;
+  padding: 2rem 1rem 0.8rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
+  pointer-events: none;
 }
+
 .counter {
   font-size: 0.65rem;
   letter-spacing: 0.25em;
-  color: #c0b0a0;
-  margin-bottom: 0.7rem;
-}
-.dots {
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-}
-.dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #d8cfc8;
-  transition: background 0.3s, transform 0.3s;
-  cursor: pointer;
-}
-.dot.current {
-  background: var(--accent);
-  transform: scale(1.4);
-  transition: background var(--fade), transform 0.3s;
+  color: rgba(255, 255, 255, 0.35);
 }
 
-/* ── Conditional styling: accent color by region ── */
-body[data-region="China"]         { --accent: #b03a2e; }
-body[data-region="Japan"]         { --accent: #c0527a; }
-body[data-region="Korea"]         { --accent: #2471a3; }
-body[data-region="India"]         { --accent: #b9770e; }
-body[data-region="Southeast Asia"]{ --accent: #1e8449; }
-body[data-region="Islamic World"] { --accent: #1a6b8a; }
+body[data-region="China"] {
+  --accent: #c0453a;
+}
+body[data-region="Japan"] {
+  --accent: #d06488;
+}
+body[data-region="Korea"] {
+  --accent: #4a9fd4;
+}
+body[data-region="India"] {
+  --accent: #d4921a;
+}
+body[data-region="Southeast Asia"] {
+  --accent: #2ea854;
+}
+body[data-region="Islamic World"] {
+  --accent: #2a8faa;
+}

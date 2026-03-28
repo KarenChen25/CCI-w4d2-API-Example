@@ -8,14 +8,14 @@
   </head>
   <body>
 
+    <div class="bg-grid" id="bg-grid"></div>
+
     <header>
       <h1>Asian Art Explorer</h1>
       <p>The Metropolitan Museum of Art</p>
     </header>
 
     <div class="stage">
-      <button class="nav-btn" id="prev" aria-label="prev">◀</button>
-
       <div class="artwork-wrap" id="artwork-wrap">
         <canvas class="shader-canvas" id="shader-canvas"></canvas>
         <img class="artwork-img" id="artwork-img" alt="" />
@@ -29,13 +29,10 @@
           <div class="close-hint">click again to close</div>
         </div>
       </div>
-
-      <button class="nav-btn" id="next" aria-label="next">▶</button>
     </div>
 
     <footer>
       <div class="counter" id="counter"></div>
-      <div class="dots" id="dots"></div>
     </footer>
 
     <script src="asian_art_explorer.js"></script>

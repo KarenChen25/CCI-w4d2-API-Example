@@ -112,9 +112,39 @@ let artworks = [];
 let current  = 0;
 let infoOpen = false;
 
+// Mondrian-style span patterns [cols, rows]
+const SPANS = [
+  [1,1],[2,1],[1,2],[1,1],[1,1],[2,2],
+  [1,1],[1,2],[2,1],[1,1],[1,1],[1,1],
+  [2,1],[1,1],[1,2],[1,1],[2,2],[1,1],
+  [1,1],[2,1],[1,1],[1,2],[1,1],[1,1],
+];
+
+function buildBgGrid() {
+  const grid = document.getElementById('bg-grid');
+  grid.innerHTML = '';
+  let bgIdx = 0;
+  artworks.forEach((art, i) => {
+    if (i === current) return;
+    const [cs, rs] = SPANS[bgIdx % SPANS.length];
+    bgIdx++;
+    const cell = document.createElement('div');
+    cell.className = 'bg-cell';
+    cell.style.gridColumn = `span ${cs}`;
+    cell.style.gridRow    = `span ${rs}`;
+    const img = document.createElement('img');
+    img.src = art.image;
+    img.alt = art.title;
+    img.loading = 'lazy';
+    cell.appendChild(img);
+    cell.addEventListener('click', () => show(i));
+    grid.appendChild(cell);
+  });
+}
+
 fetch('asian_art.json')
   .then(r => r.json())
-  .then(data => { artworks = data; buildDots(); show(0); })
+  .then(data => { artworks = data; show(0); })
   .catch(() => startShader());
 
 function show(n) {
@@ -151,24 +181,10 @@ function show(n) {
   document.getElementById('counter').textContent =
     `${current + 1} / ${artworks.length}`;
 
-  document.querySelectorAll('.dot').forEach((d, i) =>
-    d.classList.toggle('current', i === current));
-}
-
-function buildDots() {
-  const c = document.getElementById('dots');
-  artworks.forEach((_, i) => {
-    const d = document.createElement('div');
-    d.className = 'dot';
-    d.addEventListener('click', () => show(i));
-    c.appendChild(d);
-  });
+  buildBgGrid();
 }
 
 // JS Events
-document.getElementById('prev').addEventListener('click', () => show(current - 1));
-document.getElementById('next').addEventListener('click', () => show(current + 1));
-
 document.getElementById('artwork-wrap').addEventListener('click', () => {
   infoOpen = !infoOpen;
   document.getElementById('info-overlay').classList.toggle('visible', infoOpen);
