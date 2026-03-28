@@ -78,7 +78,8 @@ header h1 {
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 0.2rem;
+  /* margin-bottom: 0.2rem; */
+  margin-top: 1.5rem;
   transition: color var(--fade);
 }
 
