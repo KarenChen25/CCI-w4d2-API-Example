@@ -31,6 +31,42 @@ function yearToSize(year) {
   return 16 - t * 10;
 }
 
+const GREEN_SHADES = [
+  "#2d6a4f",
+  "#40916c",
+  "#52b788",
+  "#74c69d",
+  "#1b4332",
+  "#95d5b2",
+  "#b7e4c7",
+  "#081c15",
+];
+
+let bgDots = [];
+
+function generateBgDots() {
+  bgDots = [];
+  for (let i = 0; i < 120; i++) {
+    bgDots.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: 2 + Math.random() * 5,
+      color: GREEN_SHADES[Math.floor(Math.random() * GREEN_SHADES.length)],
+      alpha: 0.3 + Math.random() * 0.22,
+    });
+  }
+}
+
+function drawBgDots() {
+  bgDots.forEach((d) => {
+    ctx.save();
+    ctx.globalAlpha = d.alpha;
+    ctx.fillStyle = d.color;
+    ctx.fillRect(d.x - d.size / 2, d.y - d.size / 2, d.size, d.size);
+    ctx.restore();
+  });
+}
+
 function easeOut(t) {
   return 1 - Math.pow(1 - t, 3);
 }
@@ -72,6 +108,7 @@ function animate(features, startTime) {
 
   ctx.fillStyle = "#0a0a0f";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  drawBgDots();
 
   let allDone = true;
 
@@ -104,6 +141,7 @@ function animate(features, startTime) {
 
 function init() {
   resize();
+  generateBgDots();
 
   fetch("Civic_Art_Collection_20260328.geojson")
     .then((r) => r.json())
